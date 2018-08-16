@@ -21,7 +21,7 @@ require_once 'includes/buyback-functions.php';
 require_once 'includes/buyback-ajaxfunctions.php';
 
 // Root plugin folder URL of this extension.
-define( 'BUYBACK_ROOT_URL', plugins_url() . ' /wpbooklist-buyback/' );
+define( 'BUYBACK_ROOT_URL', plugins_url() . '/wpbooklist-buyback/' );
 
 // Grabbing database prefix.
 define( 'BUYBACK_PREFIX', $wpdb->prefix );
@@ -30,7 +30,7 @@ define( 'BUYBACK_PREFIX', $wpdb->prefix );
 define( 'BUYBACK_ROOT_DIR', plugin_dir_path( __FILE__ ) );
 
 // Root Image Icons URL of this extension.
-define( 'BUYBACK_ROOT_IMG_ICONS_URL', BUYBACK_ROOT_URL . ' assets/img/' );
+define( 'BUYBACK_ROOT_IMG_ICONS_URL', BUYBACK_ROOT_URL . 'assets/img/' );
 
 // Root Classes Directory for this extension.
 define( 'BUYBACK_CLASS_DIR', BUYBACK_ROOT_DIR . 'includes/classes/' );
@@ -39,10 +39,10 @@ define( 'BUYBACK_CLASS_DIR', BUYBACK_ROOT_DIR . 'includes/classes/' );
 define( 'BUYBACK_JS_DIR', BUYBACK_ROOT_DIR . 'assets/js/' );
 
 // Root JS URL for this extension.
-define( 'BUYBACK_JS_URL', BUYBACK_ROOT_URL . ' assets/js/' );
+define( 'BUYBACK_JS_URL', BUYBACK_ROOT_URL . 'assets/js/' );
 
 // Root CSS URL for this extension.
-define( 'BUYBACK_ROOT_CSS_URL', BUYBACK_ROOT_URL . ' assets/css/' );
+define( 'BUYBACK_ROOT_CSS_URL', BUYBACK_ROOT_URL . 'assets/css/' );
 
 // Adding the admin css file for this extension.
 add_action( 'admin_enqueue_scripts', 'wpbooklist_jre_buyback_admin_style' );

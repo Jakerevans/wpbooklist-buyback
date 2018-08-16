@@ -157,14 +157,14 @@ function wpbooklist_jre_buyback_create_nonces() {
 
 // Adding the front-end ui css file for this extension
 function wpbooklist_jre_buyback_frontend_ui_style() {
-    wp_register_style( 'wpbooklist-buyback-frontend-ui', BUYBACK_ROOT_CSS_URL.'buyback-frontend-ui.css' );
+    wp_register_style( 'wpbooklist-buyback-frontend-ui', BUYBACK_ROOT_CSS_URL.'buyback-main-frontend.css' );
     wp_enqueue_style('wpbooklist-buyback-frontend-ui');
 }
 
 // Code for adding the general admin CSS file
 function wpbooklist_jre_buyback_admin_style() {
   if(current_user_can( 'administrator' )){
-      wp_register_style( 'wpbooklist-buyback-admin-ui', BUYBACK_ROOT_CSS_URL.'buyback-admin-ui.css');
+      wp_register_style( 'wpbooklist-buyback-admin-ui', BUYBACK_ROOT_CSS_URL.'buyback-main-admin.css');
       wp_enqueue_style('wpbooklist-buyback-admin-ui');
   }
 }
