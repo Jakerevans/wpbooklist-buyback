@@ -49,7 +49,7 @@ class WPBookList_BuyBack_Orders_Form {
 					$tempvalue = explode(';;;', $valueindiv);
 
 					$order_total += $tempvalue[3];
-					$data_dbstring += $tempvalue[0].';;;'.$tempvalue[1].';;;'.$tempvalue[2].';;;'.$tempvalue[3]+'----';
+					$data_dbstring += $tempvalue[0].';;;'.$tempvalue[1].';;;'.$tempvalue[2].';;;'.$tempvalue[3] . '----';
 
 					$books_html_string = $books_html_string.'<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="'.$tempvalue[2].'"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">'.stripslashes(stripslashes($tempvalue[1])).'</p><p class="wpbooklist-buyback-cart-title-isbn-actual">'.$tempvalue[0].'</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$'.$tempvalue[3].'</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="'.$data_dbstring.'"></div></div></div>';
 

@@ -26,9 +26,12 @@ gulp.task('default', function() {
 // Define file sources
 var sassMain = ['dev/scss/wpbooklist-buyback-admin-ui.scss'];
 var sassFrontendSource = ['dev/scss/buyback-main-frontend.scss'];
+var sassFrontendSourcePartial = ['dev/scss/_buyback-frontend-ui.scss'];
 var sassBackendSource = ['dev/scss/buyback-main-admin.scss'];
+var sassBackendSourcePartial = ['dev/scss/_buyback-backend-ui.scss'];
 
-var jsSources = ['dev/js/*.js']; // Any .js file in scripts directory
+var jsBackendSource = ['dev/js/wpbooklist_buyback_admin.min.js']; // Any .js file in scripts directory
+var jsFrontendSource = ['dev/js/wpbooklist_buyback_frontend.min.js']; // Any .js file in scripts directory
 
 
 // Task to compile Frontend SASS file
@@ -51,20 +54,29 @@ gulp.task('sassBackendSource', function() {
         .pipe(gulp.dest('assets/css')); // The destination for the compiled file
 });
 
-// Task to concatenate and uglify js files
-gulp.task('concat', function() {
-    gulp.src(jsSources) // use jsSources
-        .pipe(concat('wpbooklist-buyback-admin-min.js')) // Concat to a file named 'script.js'
+// Task to minify Backend js file
+gulp.task('jsBackendSource', function() {
+    gulp.src(jsBackendSource) // use jsSources
+        .pipe(uglify()) // Uglify concatenated file
+        .pipe(gulp.dest('assets/js')); // The destination for the concatenated and uglified file
+});
+
+// Task to minify Frontend js file
+gulp.task('jsFrontendSource', function() {
+    gulp.src(jsFrontendSource) // use jsSources
         .pipe(uglify()) // Uglify concatenated file
         .pipe(gulp.dest('assets/js')); // The destination for the concatenated and uglified file
 });
 
 // Task to watch for changes in our file sources
 gulp.task('watch', function() {
-    gulp.watch(sassMain,['sassFrontendSource']); // If any changes in 'sassMain', perform 'sass' task
-    gulp.watch(sassMain,['sassBackendSource']);
-    gulp.watch(jsSources,['concat']);
+    gulp.watch(sassFrontendSource,['sassFrontendSource']);
+    gulp.watch(sassFrontendSourcePartial,['sassFrontendSource']);
+    gulp.watch(sassBackendSource,['sassBackendSource']);
+    gulp.watch(sassBackendSourcePartial,['sassBackendSource']);
+    gulp.watch(jsBackendSource,['jsBackendSource']);
+    gulp.watch(jsFrontendSource,['jsFrontendSource']);
 });
 
 // Default gulp task
-gulp.task('default', ['sassFrontendSource', 'sassBackendSource', 'concat', 'watch']);
+gulp.task('default', ['sassFrontendSource', 'sassBackendSource', 'jsBackendSource', 'jsFrontendSource', 'watch']);

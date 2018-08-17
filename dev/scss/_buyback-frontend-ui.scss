@@ -103,7 +103,7 @@
 
 #wpbooklist-buyback-container p{
 	color:white!important;
-        text-align:left;
+    text-align:left;
 	font-size:20px;
 }
 
@@ -352,7 +352,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     width: 300px;
-    font-size:20px;
+    font-size:15px;
     text-align: left;
     color: black;
     margin-top: 0;
@@ -390,7 +390,7 @@
     border: solid 1px #F4F2F3;
     margin-top: 8px;
     padding: 7px;
-    padding-bottom: 0;
+    padding-bottom: 8px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 5px;
@@ -422,18 +422,57 @@
     opacity:0;
 }
 
+.wpbooklist-buyback-settings-row-actual-inner-row-top p{
+    display:inline-block;
+    margin-bottom:0px;
+    font-size: 20px;
+    font-weight: bold;
+}
 
+.wpbooklist-buyback-settings-row-actual-inner-row-bottom p{
+    margin-bottom:0px;   
+}
 
+.wpbooklist-buyback-cart-value-actual{
+    font-size:17px;
+    font-weight:bold;
+}
 
+.wpbooklist-buyback-settings-row-actual-inner-row-top p{
+    margin-top:0px;
+}
 
+.wpbooklist-buyback-settings-row-actual-inner-row input{
+    width:80px;
+    margin-right:5px;
+}
 
+.wpbooklist-buyback-settings-row-actual-inner-row-top-p1{
+    margin-right: 10px;
+}
 
+.wpbooklist-buyback-settings-row-actual{
+    margin: 10px;
+    border: solid 1px black;
+    padding: 8px;
+}
 
+.wpbooklist-buyback-settings-order-contact-div, .wpbooklist-buyback-settings-order-controls-div{
+    margin-top:10px;
+}
 
+.wpbooklist-buyback-settings-order-contact-div{
+    display:inline-block;
+    vertical-align: top;
+}
+
+.wpbooklist-buyback-settings-order-contact-div p{
+    margin:0;
+}
 
 @media screen and (min-width: 48em){
-.blog:not(.has-sidebar) #primary article, .archive:not(.page-one-column):not(.has-sidebar) #primary article, .search:not(.has-sidebar) #primary article, .error404:not(.has-sidebar) #primary .page-content, .error404.has-sidebar #primary .page-content, body.page-two-column:not(.archive) #primary .entry-content, body.page-two-column #comments {
-    float: right;
-    width: 100%!important;
-}
+    .blog:not(.has-sidebar) #primary article, .archive:not(.page-one-column):not(.has-sidebar) #primary article, .search:not(.has-sidebar) #primary article, .error404:not(.has-sidebar) #primary .page-content, .error404.has-sidebar #primary .page-content, body.page-two-column:not(.archive) #primary .entry-content, body.page-two-column #comments {
+        float: right;
+        width: 100%!important;
+    }
 }

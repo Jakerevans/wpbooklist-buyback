@@ -17,8 +17,11 @@
  */
 
 global $wpdb;
-require_once 'includes/buyback-functions.php';
-require_once 'includes/buyback-ajaxfunctions.php';
+require_once 'includes/class-wpbooklist-buyback-general-functions.php';
+require_once 'includes/class-wpbooklist-buyback-ajax-functions.php';
+
+// Plugin version number.
+define( 'BUYBACK_VERSION_NUM', '2.0.0' );
 
 // Root plugin folder URL of this extension.
 define( 'BUYBACK_ROOT_URL', plugins_url() . '/wpbooklist-buyback/' );
@@ -44,6 +47,88 @@ define( 'BUYBACK_JS_URL', BUYBACK_ROOT_URL . 'assets/js/' );
 // Root CSS URL for this extension.
 define( 'BUYBACK_ROOT_CSS_URL', BUYBACK_ROOT_URL . 'assets/css/' );
 
+// CLASS INSTANTIATIONS */
+	// Call the class found in class-wpbooklist-buyback-general-functions.php.
+	$wpbooklist_buyback_general_functions = new WPBooklist_Buyback_General_Functions();
+
+	// Call the class found in class-wpbooklist-buyback-ajax-functions.php.
+	$wpbooklist_buyback_ajax_functions = new WPBooklist_Buyback_Ajax_Functions();
+/* END CLASS INSTANTIATIONS */
+
+/* FUNCTIONS FOUND IN CLASS-WPBOOKLIST-BUYBACK-GENERAL-FUNCTIONS.PHP THAT APPLY PLUGIN-WIDE */
+
+	add_action( 'after_setup_theme', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_remove_admin_bar' ) );
+
+	add_action( 'init', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_register_table_names' ) );
+
+	register_activation_hook( __FILE__, array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_create_user_table' ) );
+
+	register_activation_hook( __FILE__, array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_create_settings_table' ) );
+
+	register_activation_hook( __FILE__, array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_create_orders_table' ) );
+
+	add_action( 'init', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_create_nonces' ) );
+
+	add_action( 'admin_enqueue_scripts', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_admin_style' ) );
+
+	add_action( 'wp_enqueue_scripts', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_frontend_ui_style' ) );
+
+	add_action( 'admin_enqueue_scripts', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_admin_script' ) );
+
+	add_action( 'wp_enqueue_scripts', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_frontend_script' ) );
+
+	add_shortcode( 'wpbooklist_buyback', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_search_cart_shortcode_function' ) );
+
+	add_shortcode( 'wpbooklist_buyback_user_page', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_login_register_shortcode_function' ) );
+
+/* END OF FUNCTIONS FOUND IN CLASS-WPBOOKLIST-BUYBACK-GENERAL-FUNCTIONS.PHP THAT APPLY PLUGIN-WIDE */
+
+/* FUNCTIONS FOUND IN CLASS-WPBOOKLIST-BUYBACK-GENERAL-AJAX-FUNCTIONS.PHP THAT APPLY PLUGIN-WIDE */
+
+	add_action( 'wp_ajax_wpbooklist_buyback_addbooks_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_addbooks_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_addbooks_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_addbooks_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_colorbox_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_colorbox_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_colorbox_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_colorbox_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_add_to_cart_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_add_to_cart_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_add_to_cart_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_add_to_cart_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_add_to_cart_remove_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_add_to_cart_remove_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_add_to_cart_remove_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_add_to_cart_remove_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_search_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_search_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_search_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_search_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_login_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_login_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_login_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_login_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_populate_userdata_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_populate_userdata_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_populate_userdata_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_populate_userdata_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_finalize_sale_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_finalize_sale_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_finalize_sale_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_finalize_sale_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_save_settings_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_save_settings_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_save_settings_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_save_settings_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_save_order_changes_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_save_order_changes_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_save_order_changes_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_save_order_changes_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_register_userdata_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_register_userdata_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_register_userdata_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_register_userdata_action_callback' ) );
+
+	add_action( 'wp_ajax_wpbooklist_buyback_delete_order_changes_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_delete_order_changes_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_delete_order_changes_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_delete_order_changes_action_callback' ) );
+
+
+
+
+/* END OF FUNCTIONS FOUND IN CLASS-WPBOOKLIST-BUYBACK-GENERAL-AJAX-FUNCTIONS.PHP THAT APPLY PLUGIN-WIDE */
+
+
+// add_action('after_setup_theme', 'remove_admin_bar');.
+/*
 // Adding the admin css file for this extension.
 add_action( 'admin_enqueue_scripts', 'wpbooklist_jre_buyback_admin_style' );
 
@@ -116,16 +201,12 @@ add_action( 'wp_ajax_nopriv_wpbooklist_buyback_populate_userdata_action', 'wpboo
 add_action( 'wp_ajax_wpbooklist_buyback_register_userdata_action', 'wpbooklist_buyback_register_userdata_action_callback' );
 add_action( 'wp_ajax_nopriv_wpbooklist_buyback_register_userdata_action', 'wpbooklist_buyback_register_userdata_action_callback' );
 
-
-// Code for adding file that prevents computer sleep during the buyback process.
-add_action( 'admin_enqueue_scripts', 'wpbooklist_jre_buyback_sleep_script' );
-
 // Code for adding the main js file.
 add_action( 'wp_enqueue_scripts', 'wpbooklist_jre_buyback_main_script' );
 add_action( 'admin_enqueue_scripts', 'wpbooklist_jre_buyback_main_script' );
+*/
 
 
-add_filter( 'wpbooklist_add_sub_menu', 'wpbooklist_buyback_submenu' );
 
 /**
  * Function that utilizes the filter in the core WPBookList plugin, resulting in a new tab.
@@ -142,6 +223,9 @@ function wpbooklist_buyback_submenu( $submenu_array ) {
 	$submenu_array = array_merge( $submenu_array, $extra_submenu );
 	return $submenu_array;
 }
+
+// Adding the above function.
+add_filter( 'wpbooklist_add_sub_menu', 'wpbooklist_buyback_submenu' );
 
 
 define( 'WPBOOKLIST_BUYBACK_NONCES_ARRAY',
