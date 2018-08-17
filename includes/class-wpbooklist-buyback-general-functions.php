@@ -48,7 +48,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_General_Functions', false ) ) :
 			global $charset_collate;
 
 			// Call this manually as we may have missed the init hook.
-			wpbooklist_jre_buyback_register_table_names();
+			$this->wpbooklist_jre_buyback_register_table_names();
 
 			// If table doesn't exist, create table.
 			$test_name = $wpdb->prefix . 'wpbooklist_buyback_users';
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_General_Functions', false ) ) :
 			global $charset_collate;
 
 			// Call this manually as we may have missed the init hook.
-			wpbooklist_jre_buyback_register_table_names();
+			$this->wpbooklist_jre_buyback_register_table_names();
 
 			// If table doesn't exist, create table.
 			$test_name = $wpdb->prefix . 'wpbooklist_buyback_orders';
@@ -140,7 +140,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_General_Functions', false ) ) :
 			global $charset_collate; 
 
 			// Call this manually as we may have missed the init hook.
-			wpbooklist_jre_buyback_register_table_names();
+			$this->wpbooklist_jre_buyback_register_table_names();
 
 			// If table doesn't exist, create table.
 			$test_name = $wpdb->prefix . 'wpbooklist_buyback_settings';
@@ -188,6 +188,28 @@ if ( ! class_exists( 'WPBooklist_Buyback_General_Functions', false ) ) :
 			// Defining our final nonce array.
 			define( 'WPBOOKLIST_BUYBACK_FINAL_NONCES_ARRAY', wp_json_encode( $temp_array ) );
 
+		}
+
+		// Function that adds the Ajax Library into the head of the doc: <script type="text/javascript">var ajaxurl = "http://localhost:8888/local/wp-admin/admin-ajax.php"</script>
+		function wpbooklist_jre_buyback_add_ajax_library() {
+
+			$html = '<script type="text/javascript">';
+
+			// checking $protocol in HTTP or HTTPS
+			if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) {
+				// this is HTTPS
+				$protocol = 'https';
+			} else {
+				// this is HTTP
+				$protocol = 'http';
+			}
+			$tempAjaxPath = admin_url( 'admin-ajax.php' );
+			$goodAjaxUrl  = $protocol . strchr( $tempAjaxPath, ':' );
+
+			$html .= 'var ajaxurl = "' . $goodAjaxUrl . '"';
+			$html .= '</script>';
+			echo $html;
+			return $html;
 		}
 
 		/**

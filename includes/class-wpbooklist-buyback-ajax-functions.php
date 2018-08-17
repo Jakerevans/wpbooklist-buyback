@@ -499,8 +499,10 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 					}
 				} else {
+					error_log('$user[0]->cart');
+					error_log($user[0]->cart);
 
-					if ( '' !== $user[0]->cart ) {
+					if ( null !== $user[0]->cart ) {
 
 						$value = explode( ';;;', $user[0]->cart );
 						$cart_total++;

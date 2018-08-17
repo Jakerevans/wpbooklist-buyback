@@ -61,6 +61,8 @@ define( 'BUYBACK_ROOT_CSS_URL', BUYBACK_ROOT_URL . 'assets/css/' );
 
 	add_action( 'init', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_register_table_names' ) );
 
+	add_action( 'wp_head', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_add_ajax_library' ) );
+
 	register_activation_hook( __FILE__, array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_create_user_table' ) );
 
 	register_activation_hook( __FILE__, array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_create_settings_table' ) );
