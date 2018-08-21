@@ -888,16 +888,65 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			global $wpdb;
 			check_ajax_referer( 'wpbooklist_buyback_save_order_changes_action_callback', 'security' );
 
+			$orderstatus = '';
 			if ( isset( $_POST['orderStatus'] ) ) {
 				$orderstatus = filter_var( wp_unslash( $_POST['orderStatus'] ), FILTER_SANITIZE_STRING );
+			}
+
+			$books = '';
+			if ( isset( $_POST['books'] ) ) {
+				$books = filter_var( wp_unslash( $_POST['books'] ), FILTER_SANITIZE_STRING );
+			}
+
+			$orderid = '';
+			if ( isset( $_POST['orderId'] ) ) {
+				$orderid = filter_var( wp_unslash( $_POST['orderId'] ), FILTER_SANITIZE_STRING );
+			}
+
+			// If this is the order status, e-mail customer.
+			if( 'Approved - E-Mail Customer' === $orderstatus ) {
+
+
+//9781492650959;;;The Radium Girls: The Dark Story of America&#39;s Shining Women;;;https://images-na.ssl-images-amazon.com/images/I/51t86%2BXZO3L.jpg;;;3.15----9781492650959;;;The Radium Girls: The Dark Story of America&#39;s Shining Women;;;https://images-na.ssl-images-amazon.com/images/I/51t86%2BXZO3L.jpg;;;3.15----
+
+				$reportstring = '';
+				$booksarray   = array();
+				if ( stripos( $books, '----' ) !== false ) {
+					$booksarray = explode( '----', $books );
+
+					foreach ( $booksarray as $key => $book ) {
+						$book = explode( ';;;', $book );
+
+						if ( null !== $book[1] && '' !== $book[1] && null !== $book[3] && '' !== $book[3] ) {
+							$reportstring = $reportstring . ' ' . html_entity_decode( $book[1] ) . ' - ' . $book[0] . ' - $' . $book[3] . "\n";
+						}
+					}
+				} else {
+					$book = explode( ';;;', $book );
+
+					if ( null !== $book[1] && '' !== $book[1] && null !== $book[3] && '' !== $book[3] ) {
+						$reportstring = $reportstring . ' ' . html_entity_decode( $book[1] ) . ' - ' . $book[0] . ' - $' . $book[3] . "\n";
+					}
+				}
+
+					// E-mail customer with order details
+					// E-mail message.
+					$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nHere are the book(s) we've approved, and the prices you'll receive for each:\n\n" . $reportstring . "\nPlease mail these book(s), and only these book(s), to:\n\nThe Bookkeeper's Den\n813 Shipton Court\nChesapeake, VA 23320\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
+
+					$table_name = $wpdb->prefix . 'wpbooklist_buyback_orders';
+					$order      = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE ID=%d", $orderid ) );
+
+					// Now E-mail the user.
+					wp_mail( $order->email, "Your Bookkeeper's Den Order - Approved!", $message );
 			}
 
 			$table_name = $wpdb->prefix . 'wpbooklist_buyback_orders';
 			$data         = array(
 				'orderstatus' => $orderstatus,
+				'books' => $books,
 			);
-			$format       = array( '%s' );
-			$where        = array( 'ID' => 1 );
+			$format       = array( '%s', '%s' );
+			$where        = array( 'ID' => $orderid );
 			$where_format = array( '%d' );
 			$result       = $wpdb->update( $table_name, $data, $where, $format, $where_format );
 			wp_die( $result );

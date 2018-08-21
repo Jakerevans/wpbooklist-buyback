@@ -43,6 +43,7 @@ class WPBookList_BuyBack_Orders_Form {
 			$books_html_string = '';
 			$data_dbstring = '';
 			$value->books = rtrim($value->books, '----');
+			$isbn_string = '';
 			if(stripos($value->books, '----') !== false){
 				$books = explode('----', $value->books);
 				foreach ($books as $key => $valueindiv) {
@@ -51,7 +52,10 @@ class WPBookList_BuyBack_Orders_Form {
 					$order_total += $tempvalue[3];
 					$data_dbstring += $tempvalue[0].';;;'.$tempvalue[1].';;;'.$tempvalue[2].';;;'.$tempvalue[3] . '----';
 
-					$books_html_string = $books_html_string.'<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="'.$tempvalue[2].'"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">'.stripslashes(stripslashes($tempvalue[1])).'</p><p class="wpbooklist-buyback-cart-title-isbn-actual">'.$tempvalue[0].'</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$'.$tempvalue[3].'</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="'.$data_dbstring.'"></div></div></div>';
+					$books_html_string = $books_html_string.'<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="'.$tempvalue[2].'"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">'.stripslashes(stripslashes($tempvalue[1])).'</p><p class="wpbooklist-buyback-cart-title-isbn-actual">'.$tempvalue[0].'</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$'.$tempvalue[3].'</p><div class="wpbooklist-buyback-cart-value-remove-div" data-orderid="'.$value->ID.'" data-isbntoremove="'.$tempvalue[0].'"><img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg"><p style="margin-left:3px;" class="wpbooklist-buyback-cart-value-remove-text-actual">Remove Title</p></div></div></div>';
+
+					// Build the total isbn string to recalculate prices
+					$isbn_string .= ',' . $tempvalue[0];
 
 				}
 
@@ -61,7 +65,10 @@ class WPBookList_BuyBack_Orders_Form {
 				$order_total += $books[3];
 				$data_dbstring += $books[0].';;;'.$books[1].';;;'.$books[2].';;;'.$books[3];
 
-				$books_html_string = $books_html_string.'<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="'.$books[2].'"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">'.stripslashes(stripslashes($books[1])).'</p><p class="wpbooklist-buyback-cart-title-isbn-actual">'.$books[0].'</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$'.$books[3].'</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="'.$data_dbstring.'"></div></div></div>';
+				$books_html_string = $books_html_string.'<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="'.$books[2].'"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">'.stripslashes(stripslashes($books[1])).'</p><p class="wpbooklist-buyback-cart-title-isbn-actual">'.$books[0].'</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$'.$books[3].'</p><div class="wpbooklist-buyback-cart-value-remove-div" data-orderid="'.$value->ID.'" data-isbntoremove="'.$books[0].'"><img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg"><p style="margin-left:3px;" class="wpbooklist-buyback-cart-value-remove-text-actual">Remove Title</p></div></div></div>';
+
+					// Build the total isbn string to recalculate prices
+					$isbn_string .= ',' . $books[0];
 
 			}
 
@@ -72,6 +79,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option selected>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -87,6 +95,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option selected>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -102,6 +111,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option selected>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -117,6 +127,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option selected>Awaiting Shipment</option>
@@ -132,6 +143,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -147,6 +159,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -162,6 +175,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -177,6 +191,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -192,6 +207,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -202,11 +218,27 @@ class WPBookList_BuyBack_Orders_Form {
 							<option selected>Completed</option>
 						</select>';
 					break;
+				case 'Approved - E-Mail Customer':
+					$status_select = '
+						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
+							<option default disabled>Set The Order Status...</option>
+							<option>Initial</option>
+							<option>Payment Submitted</option>
+							<option>Payment Confirmed</option>
+							<option selected>Awaiting Shipment</option>
+							<option>Shipment in Transit</option>
+							<option>Shipment Received</option>
+							<option>Awaiting Customer Response</option>
+							<option>Pending</option>
+							<option>Completed</option>
+						</select>';
+					break;
 				default:
 					$status_select = '
 						<select id="wpbooklist-buyback-select-id-'.$value->ID.'">
 							<option default disabled>Set The Order Status...</option>
 							<option>Initial</option>
+							<option>Approved - E-Mail Customer</option>
 							<option>Payment Submitted</option>
 							<option>Payment Confirmed</option>
 							<option>Awaiting Shipment</option>
@@ -226,7 +258,7 @@ class WPBookList_BuyBack_Orders_Form {
 			}
 
 			$row_html = $row_html . '
-				<div class="wpbooklist-buyback-settings-row-actual">
+				<div class="wpbooklist-buyback-settings-row-actual"  id="wpbooklist-buyback-settings-row-actual-'.$value->ID.'">
 					<div class="wpbooklist-buyback-settings-row-actual-inner-row">
 						<div class="wpbooklist-buyback-settings-row-actual-inner-row-top">
 							<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Order #'.($key+1).'</p>
@@ -243,6 +275,8 @@ class WPBookList_BuyBack_Orders_Form {
 							'.$status_select.'
 						</div>
 						<div id="wpbooklist-buyback-settings-add-delete-div">
+
+							<button data-orderid="'.$value->ID.'" data-dbstring="'.$data_dbstring.'" data-allisbns="' . $isbn_string . '" class="wpbooklist-buyback-settings-recalculate-order-row-div" id="wpbooklist-buyback-settings-recalculate-order-row-div-'.$value->ID.'">Recalculate Prices</button>
 							<button data-orderid="'.$value->ID.'" data-dbstring="'.$data_dbstring.'" class="wpbooklist-buyback-settings-save-changes-row-div">Save Changes</button>
 							<button data-orderid="'.$value->ID.'" data-dbstring="'.$data_dbstring.'" class="wpbooklist-buyback-settings-delete-order-row-div">Delete Order</button>
 							<div class="wpbooklist-spinner" id="wpbooklist-spinner-buyback"></div>
@@ -253,7 +287,7 @@ class WPBookList_BuyBack_Orders_Form {
 						<p>'.$value->streetaddress.' '.$value->city. ', '.$value->state.' '.$value->zipcode.'</p>
 						<p>'.$value->phone.' '.$value->email.'</p>
 						<p>PayPal E-Mail: '.$value->paypalemail.'</p>
-						<p>Order Total: $'.number_format($order_total, 2).'</p>
+						<p>Order Total: $<span id="wpbooklist-buyback-admin-order-total">'.number_format($order_total, 2).'</span></p>
 					</div>
 				</div>';
 		}

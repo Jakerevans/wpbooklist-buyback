@@ -36,6 +36,7 @@
 
 #wpbooklist-buyback-settings-add-delete-div button{
     width:150px;
+    margin:10px;
 }
 
 #wpbooklist-buyback-settings-save-div button{
@@ -84,9 +85,10 @@
     top: 1px;
 }
 
-.wpbooklist-buyback-cart-value-remove-div{
+.wpbooklist-buyback-cart-value-div .wpbooklist-buyback-cart-value-remove-div{
     height:24px;
     cursor:pointer;
+    display:block;
 }
 
 .wpbooklist-buyback-cart-div{
