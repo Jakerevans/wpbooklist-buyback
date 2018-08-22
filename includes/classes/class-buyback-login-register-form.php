@@ -96,7 +96,7 @@ if ( ! class_exists( 'Buyback_Login_Register_Form', false ) ) :
 
 				// Now get the user's registration info.
 				$table_name      = $wpdb->prefix . 'wpbooklist_buyback_users';
-				$this->user_data = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table_name WHERE username=%s", $email ) );
+				$this->user_data = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $table_name WHERE wpuserid=%s", $this->wpuserid ) );
 
 				// Now get the user's order info.
 				$table_name      = $wpdb->prefix . 'wpbooklist_buyback_orders';
@@ -119,59 +119,86 @@ if ( ! class_exists( 'Buyback_Login_Register_Form', false ) ) :
 			$row_html          = '';
 			$books_html_string = '';
 			$order_tracker     = 0;
-			foreach ( $this->user_order_rows as $key => $order ) {
+			$row_html          = '';
+			$current_order_title_html = '';
 
-				// If the order has any status besides Completed.
-				if ( 'Completed' !== $order->orderstatus ) {
+			$default_html = '
+				<div id="wpbooklist-buyback-userpage-welcome-div">	
+					<div id="wpbooklist-buyback-userpage-welcome-div-name-title">Welcome ' . $this->user_data->firstname . '!</div>
+					<div id="wpbooklist-buyback-userpage-welcome-div-logout-reset-div">
+						<button id="wpbooklist-buyback-userpage-welcome-div-logout-button">Log Out</button>
+					</div>
+				</div>
+			';
 
-					$order_tracker++;
+			// If the user has active orders.
+			if ( count( $this->user_order_rows ) > 0 ) {
 
-					$order->books = rtrim( $order->books, '----' );
-					if ( false !== stripos( $order->books, '----' ) ) {
-						$books = explode( '----', $order->books );
-						foreach ( $books as $key => $valueindiv ) {
-							$tempvalue = explode( ';;;', $valueindiv );
+				$current_order_title_html = '
+					<div id="wpbooklist-buyback-userpage-welcome-div-name-title">Here are your currently active BooksaBillions orders:</div>
+				';
 
-							$order_total   += $tempvalue[3];
-							$data_dbstring += $tempvalue[0] . ';;;' . $tempvalue[1] . ';;;' . $tempvalue[2] . ';;;' . $tempvalue[3] . '----';
+				foreach ( $this->user_order_rows as $key => $order ) {
 
-							$books_html_string = $books_html_string . '<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="' . $tempvalue[2] . '"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( stripslashes( $tempvalue[1] ) ) . '</p><p class="wpbooklist-buyback-cart-title-isbn-actual">' . $tempvalue[0] . '</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$' . $tempvalue[3] . '</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $data_dbstring . '"></div></div></div>';
+					// If the order has any status besides Completed.
+					if ( 'Completed' !== $order->orderstatus ) {
+
+						$order_tracker++;
+
+						$order->books = rtrim( $order->books, '----' );
+						if ( false !== stripos( $order->books, '----' ) ) {
+							$books = explode( '----', $order->books );
+							foreach ( $books as $key => $valueindiv ) {
+								$tempvalue = explode( ';;;', $valueindiv );
+
+								$order_total   += $tempvalue[3];
+								$data_dbstring += $tempvalue[0] . ';;;' . $tempvalue[1] . ';;;' . $tempvalue[2] . ';;;' . $tempvalue[3] . '----';
+
+								$books_html_string = $books_html_string . '<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="' . $tempvalue[2] . '"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( stripslashes( $tempvalue[1] ) ) . '</p><p class="wpbooklist-buyback-cart-title-isbn-actual">' . $tempvalue[0] . '</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$' . $tempvalue[3] . '</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $data_dbstring . '"></div></div></div>';
+							}
+						} else {
+							$books = explode( ';;;', $order->books );
+
+							$order_total   += $books[3];
+							$data_dbstring += $books[0] . ';;;' . $books[1] . ';;;' . $books[2] . ';;;' . $books[3];
+
+							$books_html_string = $books_html_string . '<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="' . $books[2] . '"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( stripslashes( $books[1] ) ) . '</p><p class="wpbooklist-buyback-cart-title-isbn-actual">' . $books[0] . '</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$' . $books[3] . '</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $data_dbstring . '"></div></div></div>';
+
 						}
-					} else {
-						$books = explode( ';;;', $order->books );
 
-						$order_total   += $books[3];
-						$data_dbstring += $books[0] . ';;;' . $books[1] . ';;;' . $books[2] . ';;;' . $books[3];
-
-						$books_html_string = $books_html_string . '<div class="wpbooklist-buyback-cart-div-row"><div class="wpbooklist-buyback-cart-img-div"><img class="wpbooklist-buyback-cart-img-actual" src="' . $books[2] . '"></div><div style="margin-left:4px;" class="wpbooklist-buyback-cart-title-div"><p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( stripslashes( $books[1] ) ) . '</p><p class="wpbooklist-buyback-cart-title-isbn-actual">' . $books[0] . '</p></div><div style="margin-left:3px;" class="wpbooklist-buyback-cart-value-div"><p class="wpbooklist-buyback-cart-value-actual">$' . $books[3] . '</p><div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $data_dbstring . '"></div></div></div>';
+						$row_html = $row_html . '
+						<div class="wpbooklist-buyback-settings-row-actual">
+							<div class="wpbooklist-buyback-settings-row-actual-inner-row">
+								<div class="wpbooklist-buyback-settings-row-actual-inner-row-top">
+									<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Order #' . $order_tracker . '</p>
+									<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Order Status: ' . ucfirst( $order->orderstatus ) . '</p>
+									<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Payment Method: ' . ucfirst( $order->paymentmethod ) . '</p>
+								</div>
+								<div class="wpbooklist-buyback-settings-row-actual-inner-row-bottom">
+									' . $books_html_string . '
+								</div>
+							</div>
+							<div class="wpbooklist-buyback-settings-order-contact-div">
+								<p>' . $order->firstname . ' ' . $order->lastname . '</p>
+								<p>' . $order->streetaddress . ' ' . $order->city . ', ' . $order->state . ' ' . $order->zipcode . '</p>
+								<p>' . $order->phone . ' ' . $order->email . '</p>
+								<p>PayPal E-Mail: ' . $order->paypalemail . '</p>
+								<p>Order Total: $' . number_format( $order_total, 2 ) . '</p>
+							</div>
+						</div>';
 
 					}
-
-					$row_html = $row_html . '
-					<div class="wpbooklist-buyback-settings-row-actual">
-						<div class="wpbooklist-buyback-settings-row-actual-inner-row">
-							<div class="wpbooklist-buyback-settings-row-actual-inner-row-top">
-								<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Order #' . $order_tracker . '</p>
-								<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Order Status: ' . ucfirst( $order->orderstatus ) . '</p>
-								<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p1">Payment Method: ' . ucfirst( $order->paymentmethod ) . '</p>
-							</div>
-							<div class="wpbooklist-buyback-settings-row-actual-inner-row-bottom">
-								' . $books_html_string . '
-							</div>
-						</div>
-						<div class="wpbooklist-buyback-settings-order-contact-div">
-							<p>' . $order->firstname . ' ' . $order->lastname . '</p>
-							<p>' . $order->streetaddress . ' ' . $order->city . ', ' . $order->state . ' ' . $order->zipcode . '</p>
-							<p>' . $order->phone . ' ' . $order->email . '</p>
-							<p>PayPal E-Mail: ' . $order->paypalemail . '</p>
-							<p>Order Total: $' . number_format( $order_total, 2 ) . '</p>
-						</div>
-					</div>';
-
 				}
+			} else {
+
+				$current_order_title_html = '
+				<div id="wpbooklist-buyback-userpage-no-orders-div">
+					<p>Looks like you don\'t have any currently pending BooksaBillion orders!</p>
+					<a href="https://booksabillions.net/">Click Here to get started!</a>
+				</div>';
 			}
 
-			$final_html = $row_html;
+			$final_html = $default_html . $current_order_title_html . $row_html;
 
 			$this->final_form = $final_html;
 

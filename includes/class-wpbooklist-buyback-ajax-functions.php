@@ -663,8 +663,19 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 					</div>';
 			}
 
-			echo wp_json_encode( $insert_result ) . '--sep--seperator--sep--' . wp_json_encode( $pricing_scheme ) . '--sep--seperator--sep--' . $form . '--sep--seperator--sep--' . wp_json_encode( $user );
+			echo wp_json_encode( $insert_result ) . '--sep--seperator--sep--' . wp_json_encode( $pricing_scheme ) . '--sep--seperator--sep--' . $form . '--sep--seperator--sep--' . wp_json_encode( $user ) . '--sep--seperator--sep--' . $user[0]->state;
 
+			wp_die();
+		}
+
+
+		/**
+		 * Callback function for logging a user out
+		 */
+		public function wpbooklist_buyback_logout_action_callback(){
+			global $wpdb;
+			check_ajax_referer( 'wpbooklist_buyback_logout_action_callback', 'security' );
+			wp_logout();
 			wp_die();
 		}
 
@@ -841,7 +852,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				$wpdb->update( $table_name, $data, $where, $format, $where_format );
 
 				// E-mail message.
-				$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nPlease mail your book(s) to:\n\nThe Bookkeeper's Den\n813 Shipton Court\nChesapeake, VA 23320\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
+				$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nPlease mail your book(s) to:\n\nThe Bookkeeper's Den\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
 
 				$admin_message = "You've received a new Bookkepper's Den Order! Here are the details:\n\n" . $firstname . ' ' . $lastname . "\n" . $email . "\nPayment Method: " . $paymentmethod;
 
@@ -849,7 +860,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				wp_mail( $email, "Your Bookkeeper's Den Order", $message );
 
 				// Now e-mail the admin.
-				wp_mail( 'dukenet.admin@gmail.com', "A New Bookkeeper's Den Order Has Arrived!", $admin_message );
+				wp_mail( 'babexchange@gmail.com', "A New Bookkeeper's Den Order Has Arrived!", $admin_message );
 			} else {
 					$response_string = 'Looks like there\'s was a problem placing your order. Please call';
 			}
@@ -931,7 +942,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 					// E-mail customer with order details
 					// E-mail message.
-					$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nHere are the book(s) we've approved, and the prices you'll receive for each:\n\n" . $reportstring . "\nPlease mail these book(s), and only these book(s), to:\n\nThe Bookkeeper's Den\n813 Shipton Court\nChesapeake, VA 23320\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
+					$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nHere are the book(s) we've approved, and the prices you'll receive for each:\n\n" . $reportstring . "\nPlease mail these book(s), and only these book(s), to:\n\nThe Bookkeeper's Den\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
 
 					$table_name = $wpdb->prefix . 'wpbooklist_buyback_orders';
 					$order      = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE ID=%d", $orderid ) );

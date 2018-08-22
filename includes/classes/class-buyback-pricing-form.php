@@ -50,7 +50,7 @@ class WPBookList_BuyBack_Form {
 								<p class="wpbooklist-buyback-settings-row-actual-inner-row-top-p2">Percentage of Amazon Book Price to offer</p>
 							</div>
 							<div class="wpbooklist-buyback-settings-row-actual-inner-row-bottom">
-								<p class="wpbooklist-buyback-settings-row-actual-inner-row-bottom-1">From: 
+								<p class="wpbooklist-buyback-settings-row-actual-inner-row-from-to wpbooklist-buyback-settings-row-actual-inner-row-bottom-1">From: 
 									<input class="wpbooklist-buyback-settings-input" id=wpbooklist-buyback-settings-input-from-'.$key.' type="number" value="'.$split_vals[0].'" />To: 
 									<input class="wpbooklist-buyback-settings-input" id=wpbooklist-buyback-settings-input-to-'.$key.' type="number" value="'.$split_vals[1].'" /></p>
 								<p class="wpbooklist-buyback-settings-row-actual-inner-row-bottom-2">Percentage:

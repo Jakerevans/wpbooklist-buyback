@@ -102,9 +102,9 @@
 }
 
 #wpbooklist-buyback-container p{
-	color:white!important;
+	color:black;
     text-align:left;
-	font-size:20px;
+	font-size:16px;
 }
 
 .wpbooklist-buyback-results-indiv img{
@@ -365,7 +365,7 @@
 .wpbooklist-buyback-cart-value-remove-img-actual{
     width: 12px;
     position: relative;
-    top: 1px;
+    bottom: 13px;
 }
 
 .wpbooklist-buyback-cart-value-remove-div{
@@ -387,7 +387,7 @@
 
 .wpbooklist-buyback-cart-div-row{
     margin-bottom: 8px;
-    border: solid 1px #F4F2F3;
+    border: solid 1px black;
     margin-top: 8px;
     padding: 7px;
     padding-bottom: 8px;
@@ -422,11 +422,44 @@
     opacity:0;
 }
 
-.wpbooklist-buyback-settings-row-actual-inner-row-top p{
+#wpbooklist-buyback-checkout-contact-div .wpbooklist-buyback-checkout-row p,
+.wpbooklist-buyback-login-reg-div .wpbooklist-buyback-login-reg-row p{
+    margin-bottom:0px;
+    margin-top: 15px;
+}
+
+.wpbooklist-buyback-settings-row-actual-inner-row .wpbooklist-buyback-settings-row-actual-inner-row-top p{
     display:inline-block;
     margin-bottom:0px;
+    margin-right: 25px;
     font-size: 20px;
     font-weight: bold;
+}
+
+#wpbooklist-buyback-userpage-welcome-div-name-title{
+    text-align: center;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+#wpbooklist-buyback-userpage-welcome-div #wpbooklist-buyback-userpage-welcome-div-name-title{
+    text-align:left;
+    font-weight:bold;
+}
+
+#wpbooklist-buyback-userpage-welcome-div-name-title + .wpbooklist-buyback-settings-row-actual .wpbooklist-buyback-cart-div-row{
+    margin-bottom: 8px;
+    border: solid 1px black;
+    margin-top: 8px;
+    padding: 7px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 45%;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .wpbooklist-buyback-settings-row-actual-inner-row-bottom p{
@@ -466,7 +499,7 @@
     vertical-align: top;
 }
 
-.wpbooklist-buyback-settings-order-contact-div p{
+.wpbooklist-buyback-settings-row-actual .wpbooklist-buyback-settings-order-contact-div p{
     margin:0;
 }
 

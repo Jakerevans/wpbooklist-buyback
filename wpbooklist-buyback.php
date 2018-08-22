@@ -102,6 +102,9 @@ define( 'BUYBACK_ROOT_CSS_URL', BUYBACK_ROOT_URL . 'assets/css/' );
 	add_action( 'wp_ajax_wpbooklist_buyback_search_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_search_action_callback' ) );
 	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_search_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_search_action_callback' ) );
 
+	add_action( 'wp_ajax_wpbooklist_buyback_logout_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_logout_action_callback' ) );
+	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_logout_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_logout_action_callback' ) );
+
 	add_action( 'wp_ajax_wpbooklist_buyback_login_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_login_action_callback' ) );
 	add_action( 'wp_ajax_nopriv_wpbooklist_buyback_login_action', array( $wpbooklist_buyback_ajax_functions, 'wpbooklist_buyback_login_action_callback' ) );
 
@@ -245,5 +248,6 @@ define( 'WPBOOKLIST_BUYBACK_NONCES_ARRAY',
 		'wpbooklistbuybacknonce11' => 'wpbooklist_buyback_save_settings_action_callback',
 		'wpbooklistbuybacknonce12' => 'wpbooklist_buyback_save_order_changes_action_callback',
 		'wpbooklistbuybacknonce13' => 'wpbooklist_buyback_delete_order_changes_action_callback',
+		'wpbooklistbuybacknonce14' => 'wpbooklist_buyback_logout_action_callback',
 	))
 );
