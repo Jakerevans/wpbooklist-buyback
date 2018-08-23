@@ -20,6 +20,8 @@
     vertical-align: top;
     width: 40%;
     text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .wpbooklist-buyback-login-reg-div input, .wpbooklist-buyback-login-reg-div select, #wpbooklist-buyback-checkout-contact-div select{
@@ -39,6 +41,8 @@
 #wpbooklist-buyback-checkout-div{
     opacity:0;
     margin-bottom:40px;
+    height:0px;
+    overflow:hidden;
 }
 
 #wpbooklist_saved_title_and_select_div{
@@ -149,7 +153,7 @@
 }
 
 #wpbooklist_saved_title_link{
-    height: 55px;
+    height: 42px;
     margin: 0 auto;
     margin-bottom: 0px;
     line-height: 1.4;

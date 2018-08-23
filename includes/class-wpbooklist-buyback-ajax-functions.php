@@ -470,7 +470,8 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				</div>';
 
 				// If user has more than one cart item saved...
-				if ( stripos( false !== $user[0]->cart, '----' ) ) {
+				if ( false !== stripos( $user[0]->cart, '----' ) ) {
+
 					$user[0]->cart = explode( '----', $user[0]->cart );
 					foreach ( $user[0]->cart as $key => $value ) {
 
@@ -499,10 +500,8 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 					}
 				} else {
-					error_log('$user[0]->cart');
-					error_log($user[0]->cart);
 
-					if ( null !== $user[0]->cart ) {
+					if ( '' !== $user[0]->cart ) {
 
 						$value = explode( ';;;', $user[0]->cart );
 						$cart_total++;
@@ -521,7 +520,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 							<div class="wpbooklist-buyback-cart-value-div">
 								<p class="wpbooklist-buyback-cart-value-actual">$' . $value[3] . '</p>
 								<div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $dbstring . '">
-									<img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button . svg" />
+									<img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg" />
 									<p class="wpbooklist-buyback-cart-value-remove-text-actual">Remove from Cart</p>
 								</div>
 							</div>
@@ -852,15 +851,15 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				$wpdb->update( $table_name, $data, $where, $format, $where_format );
 
 				// E-mail message.
-				$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nPlease mail your book(s) to:\n\nThe Bookkeeper's Den\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
+				$message = "Thank you for doing business with BooksaBillion!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nPlease mail your book(s) to:\n\nBooksaBillion\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nBooksaBillion";
 
-				$admin_message = "You've received a new Bookkepper's Den Order! Here are the details:\n\n" . $firstname . ' ' . $lastname . "\n" . $email . "\nPayment Method: " . $paymentmethod;
+				$admin_message = "You've received a new BooksaBillion Order! Here are the details:\n\n" . $firstname . ' ' . $lastname . "\n" . $email . "\nPayment Method: " . $paymentmethod;
 
 				// Now E-mail the user.
-				wp_mail( $email, "Your Bookkeeper's Den Order", $message );
+				wp_mail( $email, "Your BooksaBillion Order", $message );
 
 				// Now e-mail the admin.
-				wp_mail( 'babexchange@gmail.com', "A New Bookkeeper's Den Order Has Arrived!", $admin_message );
+				wp_mail( 'babexchange@gmail.com', "A New BooksaBillion Order Has Arrived!", $admin_message );
 			} else {
 					$response_string = 'Looks like there\'s was a problem placing your order. Please call';
 			}
@@ -942,13 +941,13 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 					// E-mail customer with order details
 					// E-mail message.
-					$message = "Thank you for doing business with the Bookkeeper's Den!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nHere are the book(s) we've approved, and the prices you'll receive for each:\n\n" . $reportstring . "\nPlease mail these book(s), and only these book(s), to:\n\nThe Bookkeeper's Den\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nThe Bookkeeper's Den";
+					$message = "Thank you for doing business with BooksaBillion!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nHere are the book(s) we've approved, and the prices you'll receive for each:\n\n" . $reportstring . "\nPlease mail these book(s), and only these book(s), to:\n\nBooksaBillion\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nBooksaBillion";
 
 					$table_name = $wpdb->prefix . 'wpbooklist_buyback_orders';
 					$order      = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE ID=%d", $orderid ) );
 
 					// Now E-mail the user.
-					wp_mail( $order->email, "Your Bookkeeper's Den Order - Approved!", $message );
+					wp_mail( $order->email, "Your BooksaBillion Order - Approved!", $message );
 			}
 
 			$table_name = $wpdb->prefix . 'wpbooklist_buyback_orders';
