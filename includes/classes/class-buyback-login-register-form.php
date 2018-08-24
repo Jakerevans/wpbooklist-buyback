@@ -218,7 +218,7 @@ if ( ! class_exists( 'Buyback_Login_Register_Form', false ) ) :
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">Password</p>
-						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-password" type="text"/>
+						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-password" type="password"/>
 					</div>
 					<div class="wpbooklist-buyback-login-reg-button-div">
 						<button class="wpbooklist-buyback-login-button-user-page" id="wpbooklist-buyback-login-button">Login</button>
@@ -312,11 +312,11 @@ if ( ! class_exists( 'Buyback_Login_Register_Form', false ) ) :
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">Password</p>
-						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-password" type="text"/>
+						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-password" type="password"/>
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">Re-enter Password</p>
-						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-reenterpassword" type="text"/>
+						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-reenterpassword" type="password"/>
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">E-Mail Address</p>

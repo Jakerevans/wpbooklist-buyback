@@ -347,7 +347,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">Password</p>
-						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-password" type="text"/>
+						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-password" type="password"/>
 					</div>
 					<div class="wpbooklist-buyback-login-reg-button-div">
 						<button class="wpbooklist-buyback-login-button-search-page-login" id="wpbooklist-buyback-login-button">Login</button>
@@ -441,11 +441,11 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">Password</p>
-						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-password" type="text"/>
+						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-password" type="password"/>
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">Re-enter Password</p>
-						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-reenterpassword" type="text"/>
+						<input class="wpbooklist-buyback-login-reg-contact-field" id="wpbooklist-buyback-login-reg-contact-field-register-reenterpassword" type="password"/>
 					</div>
 					<div class="wpbooklist-buyback-login-reg-row">
 						<p class="wpbooklist-checkout-contact-title">E-Mail Address</p>
@@ -481,23 +481,25 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 						$dbstring = $value[0] . ';;;' . $value[1] . ';;;' . $value[2] . ';;;' . $value[3];
 
-						$cart_html = $cart_html . '<div class="wpbooklist-buyback-cart-div-row">
-							<div class="wpbooklist-buyback-cart-img-div">
-								<img class="wpbooklist-buyback-cart-img-actual" src="' . $value[2] . '"/>
-							</div>
-							<div class="wpbooklist-buyback-cart-title-div">
-								<p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( $value[1] ) . '</p>
-								<p class="wpbooklist-buyback-cart-title-isbn-actual">' . $value[0] . '</p>
-							</div>
-							<div class="wpbooklist-buyback-cart-value-div">
-								<p class="wpbooklist-buyback-cart-value-actual">$' . $value[3] . '</p>
-								<div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $dbstring . '">
-									<img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg" />
-									<p class="wpbooklist-buyback-cart-value-remove-text-actual">Remove from Cart</p>
-								</div>
-							</div>
-						</div>';
+						if ( null !== $value[2] && '' !== $value[2] && null !== $value[1] && '' !== $value[1] && null !== $value[3] && '' !== $value[3] ) {
 
+							$cart_html = $cart_html . '<div class="wpbooklist-buyback-cart-div-row">
+								<div class="wpbooklist-buyback-cart-img-div">
+									<img class="wpbooklist-buyback-cart-img-actual" src="' . $value[2] . '"/>
+								</div>
+								<div class="wpbooklist-buyback-cart-title-div">
+									<p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( $value[1] ) . '</p>
+									<p class="wpbooklist-buyback-cart-title-isbn-actual">' . $value[0] . '</p>
+								</div>
+								<div class="wpbooklist-buyback-cart-value-div">
+									<p class="wpbooklist-buyback-cart-value-actual">$' . $value[3] . '</p>
+									<div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $dbstring . '">
+										<img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg" />
+										<p class="wpbooklist-buyback-cart-value-remove-text-actual">Remove from Cart</p>
+									</div>
+								</div>
+							</div>';
+						}
 					}
 				} else {
 
@@ -509,22 +511,26 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 						$dbstring = $value[0] . ';;;' . $value[1] . ';;;' . $value[2] . ';;;' . $value[3];
 
-						$cart_html = $cart_html . '<div class="wpbooklist-buyback-cart-div-row">
-							<div class="wpbooklist-buyback-cart-img-div">
-								<img class="wpbooklist-buyback-cart-img-actual" src="' . $value[2] . '"/>
-							</div>
-							<div class="wpbooklist-buyback-cart-title-div">
-								<p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( $value[1] ) . '</p>
-								<p class="wpbooklist-buyback-cart-title-isbn-actual">' . $value[0] . '</p>
-							</div>
-							<div class="wpbooklist-buyback-cart-value-div">
-								<p class="wpbooklist-buyback-cart-value-actual">$' . $value[3] . '</p>
-								<div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $dbstring . '">
-									<img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg" />
-									<p class="wpbooklist-buyback-cart-value-remove-text-actual">Remove from Cart</p>
+						if ( null !== $value[2] && '' !== $value[2] && null !== $value[1] && '' !== $value[1] && null !== $value[3] && '' !== $value[3] ) {
+
+							$cart_html = $cart_html . '<div class="wpbooklist-buyback-cart-div-row">
+								<div class="wpbooklist-buyback-cart-img-div">
+									<img class="wpbooklist-buyback-cart-img-actual" src="' . $value[2] . '"/>
 								</div>
-							</div>
-						</div>';
+								<div class="wpbooklist-buyback-cart-title-div">
+									<p class="wpbooklist-buyback-cart-title-actual">' . stripslashes( $value[1] ) . '</p>
+									<p class="wpbooklist-buyback-cart-title-isbn-actual">' . $value[0] . '</p>
+								</div>
+								<div class="wpbooklist-buyback-cart-value-div">
+									<p class="wpbooklist-buyback-cart-value-actual">$' . $value[3] . '</p>
+									<div class="wpbooklist-buyback-cart-value-remove-div" data-dbstring="' . $dbstring . '">
+										<img class="wpbooklist-buyback-cart-value-remove-img-actual" src="' . BUYBACK_ROOT_IMG_ICONS_URL . 'cancel-button.svg" />
+										<p class="wpbooklist-buyback-cart-value-remove-text-actual">Remove from Cart</p>
+									</div>
+								</div>
+							</div>';
+
+						}
 					}
 				}
 
@@ -851,7 +857,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				$wpdb->update( $table_name, $data, $where, $format, $where_format );
 
 				// E-mail message.
-				$message = "Thank you for doing business with BooksaBillion!\nWe recommend that you use USPS Media Mail as it is the more affordable method of mailing books.\nPlease mail your book(s) to:\n\nBooksaBillion\n1937 Sanderson Road\nChesapeake, VA 23322\n\nAfter we receive the book(s), we will submit a payment to you within 3 business days.\n\nRegards,\nBooksaBillion";
+				$message = "Thank you for doing business with BooksaBillion!\nYou will receive an additional confirmation E-Mail shortly that will list which of your books BookaBillions has accepted, along with their individual prices, and the address you'll ship your books to.\n\nRegards,\nBooksaBillion";
 
 				$admin_message = "You've received a new BooksaBillion Order! Here are the details:\n\n" . $firstname . ' ' . $lastname . "\n" . $email . "\nPayment Method: " . $paymentmethod;
 
