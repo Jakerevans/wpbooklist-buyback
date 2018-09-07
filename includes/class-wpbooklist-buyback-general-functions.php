@@ -231,7 +231,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_General_Functions', false ) ) :
 		}
 
 		/**
-		 * Code for adding the admin js
+		 * Code for adding the admin js file
 		 */
 		public function wpbooklist_jre_buyback_admin_script() {
 
