@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				'woocommerce'     => $woo,
 			);
 
-			require_once CLASS_DIR . 'class-book.php';
+			require_once CLASS_BOOK_DIR . 'class-wpbooklist-book.php';
 			$book_class    = new WPBookList_Book( 'add', $book_array, null );
 			$insert_result = $book_class->add_result;
 
@@ -150,7 +150,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				'similar_products' => $similar,
 			);
 
-			require_once CLASS_DIR . 'class-book.php';
+			require_once CLASS_BOOK_DIR . 'class-wpbooklist-book.php';
 			$book_class  = new WPBookList_Book( 'buyback-colorbox', $book_array, null );
 			$category    = $book_class->category;
 			$itunes_page = $book_class->itunes_page;
@@ -178,7 +178,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			);
 
 			// Instantiate the class that shows the book in colorbox.
-			require_once CLASS_DIR . 'class-show-book-in-colorbox.php';
+			require_once CLASS_BOOK_DIR . 'class-show-book-in-colorbox.php';
 			$colorbox = new WPBookList_Show_Book_In_Colorbox( null, null, $book_array, null );
 
 			echo $colorbox->output;
@@ -299,7 +299,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			$insert_result2 = array();
 			$insert_result3 = array();
 
-			require_once CLASS_DIR . 'class-book.php';
+			require_once CLASS_BOOK_DIR . 'class-wpbooklist-book.php';
 
 			for ( $i = 1; $i < 2; $i++ ) {
 
@@ -461,6 +461,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 
 				$table_name = $wpdb->prefix . 'wpbooklist_buyback_users';
 				$user       = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE wpuserid=%d", get_current_user_id() ) );
+
 				$cart_total = 0;
 				$cart_value = 0.00;
 
