@@ -178,7 +178,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			);
 
 			// Instantiate the class that shows the book in colorbox.
-			require_once CLASS_BOOK_DIR . 'class-show-book-in-colorbox.php';
+			require_once CLASS_DIR . 'class-wpbooklist-show-book-in-colorbox.php';
 			$colorbox = new WPBookList_Show_Book_In_Colorbox( null, null, $book_array, null );
 
 			echo $colorbox->output;
@@ -304,7 +304,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			for ( $i = 1; $i < 2; $i++ ) {
 
 				$book_array = array(
-					'amazon_auth_yes' => 'true',
+					'amazonauth' => 'true',
 					'use_amazon_yes'  => 'true',
 					'title'           => $title,
 					'author'          => $author,
