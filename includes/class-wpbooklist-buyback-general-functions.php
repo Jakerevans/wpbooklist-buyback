@@ -276,6 +276,19 @@ if ( ! class_exists( 'WPBooklist_Buyback_General_Functions', false ) ) :
 			echo $front_end_library_ui->output_buyback_form();
 			return ob_get_clean();
 		}
+        
+        /**
+		 * Code for adding the frontend book sort/search shortcode for non-logged in members
+		 */
+		public function wpbooklist_jre_buyback_search_cart_nonmembers_shortcode_function() {
+			global $wpdb;
+
+			ob_start();
+			include_once BUYBACK_CLASS_DIR . 'class-buyback-nonmembers-form.php';
+			$front_end_library_ui = new WPBookList_Buyback_Nonmembers_Form();
+			echo $front_end_library_ui->output_buyback_nonmembers_form();
+			return ob_get_clean();
+		}
 
 		/**
 		 * Code for adding the frontend login/Register page

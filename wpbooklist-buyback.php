@@ -80,6 +80,8 @@ define( 'BUYBACK_ROOT_CSS_URL', BUYBACK_ROOT_URL . 'assets/css/' );
 	add_action( 'wp_enqueue_scripts', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_frontend_script' ) );
 
 	add_shortcode( 'wpbooklist_buyback', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_search_cart_shortcode_function' ) );
+    
+    add_shortcode( 'wpbooklist_buyback_nonmembers', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_search_cart_nonmembers_shortcode_function' ) );
 
 	add_shortcode( 'wpbooklist_buyback_user_page', array( $wpbooklist_buyback_general_functions, 'wpbooklist_jre_buyback_login_register_shortcode_function' ) );
 

@@ -294,6 +294,10 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 				$username = filter_var( wp_unslash( $_POST['username'] ), FILTER_SANITIZE_STRING );
 			}
 
+			if ( isset( $_POST['nonmembershortcode'] ) ) {
+				$nonmembershortcode = filter_var( wp_unslash( $_POST['nonmembershortcode'] ), FILTER_SANITIZE_STRING );
+			}
+
 			$storefront     = 'false';
 			$insert_result  = array();
 			$insert_result2 = array();
@@ -304,7 +308,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			for ( $i = 1; $i < 2; $i++ ) {
 
 				$book_array = array(
-					'amazonauth' => 'true',
+					'amazonauth'      => 'true',
 					'use_amazon_yes'  => 'true',
 					'title'           => $title,
 					'author'          => $author,
@@ -312,7 +316,11 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 					'book_page'       => $i,
 				);
 
+				error_log(print_r($book_array, true));
+
 				$book_class = new WPBookList_Book( 'search', $book_array, null );
+
+				error_log(print_r($book_class, true));
 
 				if ( 1 === $i ) {
 					$insert_result = $book_class->amazon_array;
@@ -669,11 +677,10 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 					</div>';
 			}
 
-			echo wp_json_encode( $insert_result ) . '--sep--seperator--sep--' . wp_json_encode( $pricing_scheme ) . '--sep--seperator--sep--' . $form . '--sep--seperator--sep--' . wp_json_encode( $user ) . '--sep--seperator--sep--' . $user[0]->state;
+			echo wp_json_encode( $insert_result ) . '--sep--seperator--sep--' . wp_json_encode( $pricing_scheme ) . '--sep--seperator--sep--' . $form . '--sep--seperator--sep--' . wp_json_encode( $user ) . '--sep--seperator--sep--' . $user[0]->state . '--sep--seperator--sep--' . $nonmembershortcode;
 
 			wp_die();
 		}
-
 
 		/**
 		 * Callback function for logging a user out
@@ -732,6 +739,7 @@ if ( ! class_exists( 'WPBooklist_Buyback_Ajax_Functions', false ) ) :
 			$result_string = 'Username not found!';
 			wp_die( $result_string . '--' . $username . '--' . $password );
 		}
+
 
 		/**
 		 * Callback function for logging user in
